@@ -1,0 +1,21 @@
+ [{
+   "customerNo": 1,
+   "name": "Rahuld Dravid",
+   "address": ""
+ }, {
+   "customerNo": 2,
+   "name": "Sachin Tendulkar",
+   "address": ""
+ }, {
+   "customerNo": 3,
+   "name": "Saurrav Ganguly",
+   "address": ""
+ }, {
+   "customerNo": 4,
+   "name": "Mahendra Singh Dhoni",
+   "address": ""
+ }, {
+   "customerNo": 5,
+   "name": "Virat Kohli",
+   "address": ""
+ }]

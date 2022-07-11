@@ -1,0 +1,8 @@
+<h3>Customer Details</h3>
+
+<p>Customer No: <input type="number" [(ngModel)]="customer.customerNo" /></p>
+<p>Customer Name: <input type="text" [(ngModel)]="customer.name" /></p>
+<p>Customer Address: <input type="text" [(ngModel)]="customer.address" /></p>
+
+<button (click)="saveDetails()">Update</button>
+<ng-container *ngTemplateOutlet="toChild"> </ng-container>

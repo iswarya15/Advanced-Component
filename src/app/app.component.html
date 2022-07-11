@@ -1,0 +1,72 @@
+<h1>Customer Database</h1>
+<h2>Customer List</h2>
+<table mat-table [dataSource]="customers" class="mat-elevation-z8">
+  <!-- Customer Number Column -->
+  <ng-container matColumnDef="customerNo">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let element">{{ element.customerNo }}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+  <!-- Address Column -->
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef>Address</th>
+    <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+  </ng-container>
+
+  <ng-container class="matmenu" matColumnDef="option">
+    <th mat-header-cell *matHeaderCellDef>Option</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button color="primary" (click)="editCustomer(element)">
+        Edit
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<p #para>Paragraph</p>
+<button (click)="getText()">Change para text</button>
+
+<ng-container *ngTemplateOutlet="loading"> </ng-container>
+<ng-container *ngTemplateOutlet="loading"> </ng-container>
+
+<!-- Pass this template to Child Component by declaring this template (TemplateRef) in the component -->
+<ng-template #tochild>
+  <div>Hello Child, this is sent from Parent via @Input as templateRef</div>
+</ng-template>
+
+<!-- We are instantiating the template using the ngTemplateOutlet directive within ng-container -->
+<label>Who are you?</label>
+<input #role type="text" [(ngModel)]="user" />
+
+<h3>ViewChildren Snippet</h3>
+<label>Graduated College?</label>
+<input #userCheckBox type="checkbox" />
+<label>Interested in OpenSource?</label>
+<input #userCheckBox type="checkbox" />
+<label>Participated in Hackathons?</label>
+<input #userCheckBox type="checkbox" />
+
+<!-- Renderer2 -->
+<div #render>Renderer</div>
+<input #renderAttribute type="text" />
+<button #setAttribute>Set Attribute</button>
+
+<app-child
+  #childComponent
+  *ngIf="showCustomerDetails"
+  [customer]="selectedCustomer"
+  (updateDetails)="updateCustomer($event)"
+  [toChild]="toChild"
+></app-child>
+
+<ng-template #loading>
+  <div>Loading</div>
+</ng-template>

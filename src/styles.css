@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Roboto&display=swap');
+html,body{
+background-color: rgb(139, 121, 153) !important;
+padding: 30px;
+font-family: 'Roboto', sans-serif;
+}
