@@ -90,11 +90,11 @@ ngAfterViewInit() {
 
 We used the {static: true} in the above code. The static option determines the timing of ViewChild query resolution.
 
-- `static: true` will resolve `ViewChild` before first change detection is run.
-- `static: false` will resolve `ViewChild` after every change detection is run.
+So as a rule of thumb you can go for the following:
 
-The value of static becomes important when the child is rendered dynamically. For example, inside a `ngIf/ngSwitch`.
-Set static to false if component is rendered dynamically
+`{ static: true }` needs to be set when you want to `access` the ViewChild in `ngOnInit`.
+
+`{ static: false }` can only be accessed in `ngAfterViewInit`. This is also what you want to go for when you have a structural directive (i.e. ngIf) on your element in your template.
 
 ## Using Read Option in ViewChild
 
@@ -160,3 +160,86 @@ this.renderer.listen(this.setAttributeBtn, 'click', () => {
   console.log('Perform action');
 })
 ```
+
+## Life Cycle of component
+
+The lifecycle of a component starts when Angular `instantiates` the component.
+
+Instantiation starts with invoking the component's `constructor` and injecting the services vie `Dependency Injection`.
+Once the Angular instantiates the component, it starts the `change detection` cycle for the component.
+
+It checks and update any data-bound `Input` property of the component & initializes the component. It then raises the following
+lifecycle methods.
+
+`OnChanges` => If Angular detects any change to the `Input` property. It runs every time, an `Input` property changes
+
+`OnInit` => This hook runs tells us the component is ready and runs only once. This hook gives us a chance to run any initialization
+logic and update few properties.
+
+`DoCheck` => Allows us to run custom change detection. This hook runs during every change detection cycle.
+
+After this Angular invokes four more hooks. They are `AfterContentInit`, `AfterContentChecked`, `AfterViewInit`, `AfterViewChecked`
+
+`ngOnDestroy` => When we remove the component
+
+## Content vs View
+
+Hooks `AfterContentInit`, `AfterContentChecked` deals with `Content`. while `AfterViewInit`, `AfterViewChecked` deals with `View`
+
+### Content
+
+`Content` refers to the external content injected into a component via `Content Projection`
+
+Check how Content Projection is done in `app.component.html` to `child.component.html` using `ng-content`
+
+### View
+
+`View` refers to the template of the component.
+
+## AfterContentInit
+
+`AfterContentInit` is the life cycle hook that Angular calls after the component's `content` has been `initialized` and injected into
+the Component's `view`
+
+## AfterContentChecked
+
+`AfterContentChecked` is the life cycle that Angular calls during `every change detection cycle` after Angular completes checking
+content for changes.
+
+## AfterViewInit
+
+`AfterViewInit` => lifecycle hook that Angular calls during the `change detection` after it completes the `initialization` of
+the `component's view` and its `child's view`
+
+## AfterViewChecked
+
+`AfterViewChecked` => life cycle hook that Angular calls after the change detector `completes` the checking of a component's view
+and child views `for changes`.
+
+Angular updates the properties decorated with `ViewChild` and `ViewChildren` properties before raising this hook
+
+## Init vs Checked
+
+`Init Hooks` => Angular fires `AfterContentInit` & `AfterViewInit` hooks when the _content or view is initialized for the first time_.
+That happens during the first change detection cycle, when Angular instantiates the component.
+
+`Checked Hooks` => Angular checks if the content/view has changed. i.e. _previously rendered content or view is same as current content or view_
+
+### On Component Creation
+
+On the component creation, the hooks are fired in the following order.
+
+1. OnChanges
+2. OnInit
+3. DoCheck
+4. AfterContentInit
+5. AfterContentChecked
+6. AfterViewInit
+7. AfterViewChecked
+
+Angular initializes and checks the `content` first, before the component's view and child views. After content, angular initializes the component's view
+
+`AfterViewInit`, `AfterViewChecked` fires after the child components are ready.
+
+Avoid using `Checked Hooks` since they run on every change detection cycle. For example, when you click on input element and move away.
+If you choose to implement these hooks, make sure the code is extremely light weight.

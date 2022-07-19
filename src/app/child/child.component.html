@@ -6,3 +6,11 @@
 
 <button (click)="saveDetails()">Update</button>
 <ng-container *ngTemplateOutlet="toChild"> </ng-container>
+
+<!-- Placeholder for content from parent -->
+<ng-content></ng-content>
+
+<button (click)="changeContent()">Change Content</button>
+
+<!-- Work around for ExpressionChangedAfterItHasBeenCheckedError -->
+<input [(ngModel)]="message" (keyup)="changeDetectorRef.detectChanges()" />

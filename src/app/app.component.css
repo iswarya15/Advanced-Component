@@ -5,3 +5,7 @@ table {
   font-family: 'Courier New', Courier, monospace;
   background-color: white;
 }
+.active{
+  background-color: blue;
+  color: white;
+}
